@@ -1,0 +1,66 @@
+#!/bin/sh
+
+# Remove Completed Launch Indicator
+rm ~/.Minecraft/LaunchCompleted
+
+# Create Cache Disk
+#~/Minecraft/Scripts/Cache/Format
+
+# Mount Cache Disk
+#~/Minecraft/Scripts/Cache/Mount
+
+# Create Swap
+#~/Minecraft/Scripts/Swap/Create
+
+# Start Swap
+#~/Minecraft/Scripts/Swap/Start
+
+# Mount RAM Disk
+#~/Minecraft/Scripts/TmpFS/Mount
+
+# Mount Storage Disk
+#~/Minecraft/Scripts/Storage/Mount
+
+# Load World Into RAM Disk
+#sudo cp -r /mnt/Storage/SignificantBrothers/* /mnt/TmpFS/
+
+# Load Crontab
+crontab ~/Minecraft/Scripts/Cron/Crontab.New
+
+# Create Temporary Environment
+ln -sT ~/.Minecraft/Environments/SignificantBrothers/ ~/Minecraft/Environment
+ln -sT ~/Minecraft/Servers/Vanilla/Server.jar ~/Minecraft/Environment/Server
+ln -sT /mnt/TmpFS/ ~/Minecraft/Environment/World
+cd ~/Minecraft/Environment/
+
+# Update Server Properties
+rm ./server.properties
+cat ./Configuration/Game >> ./server.properties
+cat ./Configuration/Network >> ./server.properties
+cat ./Configuration/Other >> ./server.properties
+cat ./Configuration/Performance >> ./server.properties
+cat ./Configuration/Permissions >> ./server.properties
+cat ./Configuration/RemoteConsole >> ./server.properties
+cat ./Configuration/ResourcePack >> ./server.properties
+cat ./Configuration/ServerIdentity >> ./server.properties
+cat ./Configuration/WorldGeneration >> ./server.properties
+
+# Start Minecraft Server
+sudo java -jar ./Server --nogui --bonusChest --universe ./ --world World &
+
+# Destroy Temporary Environment
+#unlink ~/Minecraft/Environment/World
+#unlink ~/Minecraft/Environment/Server
+#unlink ~/Minecraft/Environment
+
+# Unload World From RAM Disk
+#sudo cp -r /mnt/TmpFS/* ~/mnt/Storage/SignificantBrothers/
+
+# Destroy RAM Disk
+#~/Minecraft/Scripts/TmpFS/Unmount
+
+# Automatic Git
+#~/Minecraft/Scripts/Git/AddCommitPush
+
+# Indicate Completed Launch
+touch ~/.Minecraft/LaunchCompleted

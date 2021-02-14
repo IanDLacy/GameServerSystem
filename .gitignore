@@ -1,0 +1,11 @@
+Environment
+Server.jar
+logs
+crash-reports
+usercache.json
+whitelist.json
+banned-players.json
+banned-ips.json
+ops.json
+rcon-cli
+rcon-cli_1.4.8_linux_amd64.tar.gz

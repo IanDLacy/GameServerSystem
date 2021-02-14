@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo mkfs.ext4 -F /dev/disk/by-id/google-local-ssd-0
+
+#sudo bash -c "echo \"UUID=`sudo blkid -s UUID -o value /dev/disk/by-id/google-local-ssd-0` /mnt/Cache ext4 discard,defaults,nofail 0 2\" >> /etc/fstab"
